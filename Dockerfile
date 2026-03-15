@@ -5,7 +5,7 @@ RUN pacman-key --init && \
     pacman-key --populate archlinux && \
     pacman -Syu --noconfirm && \
     pacman -S --noconfirm base-devel git sudo archlinux-keyring pyside6 \
-    nano grub archiso pipewire-jack pacman-contrib\
+    nano grub archiso pipewire-jack pacman-contrib starship ripgrep \
     python-gitpython python-rich python-pyxdg python-psutil python-yaml \
     python-six python-pycryptodome python-cachetools \
     python-requests python-zstandard qt6-tools gnu-free-fonts
