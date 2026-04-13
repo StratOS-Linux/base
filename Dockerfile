@@ -17,9 +17,7 @@ RUN sed -i '/^#.*\(VerbosePkgLists\|ILoveCandy\)/s/^#//' /etc/pacman.conf && \
     sed -i 's/^#*\(PACKAGER=\).*/\1"StratOS team <stratos-linux@gmail.com>"/' /etc/makepkg.conf && \
     sed -i 's/purge debug/purge !debug/g' /etc/makepkg.conf
 
-# Fetch additional packages from the StratOS repos
-RUN pacman -Sy --noconfirm && \
-    pacman -S python-vdf python-inputs python-steam --noconfirm
+RUN pacman -Sy --noconfirm
 
 #RUN curl -s "https://archlinux.org/mirrorlist/?country=IN&country=US&country=DE&country=GB&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 
@@ -30,7 +28,7 @@ RUN export TMPFILE="/tmp/ratemir" && \
     mv $TMPFILE /etc/pacman.d/mirrorlist
 
 # Fetch from the updated mirrors
-RUN pacman -Syy --noconfirm
+# RUN pacman -Sy python-vdf python-inputs python-steam --noconfirm
 
 # Add third-party keys
 RUN pacman-key --keyserver hkps://keyserver.ubuntu.com --recv-keys \
@@ -52,3 +50,5 @@ RUN gpg --recv E78DAE0F3115E06B && \
 
 # USER builder
 # WORKDIR /workspace
+
+RUN pacman -Sccc --noconfirm
