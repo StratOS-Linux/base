@@ -4,7 +4,7 @@ FROM archlinux/archlinux:latest
 RUN pacman-key --init && \
     pacman-key --populate archlinux && \
     pacman -Syu --noconfirm && \
-    pacman -S --noconfirm base-devel git sudo python-rich python-gitpython archlinux-keyring nano grub archiso
+    pacman -S --noconfirm base-devel git sudo python python-rich python-gitpython archlinux-keyring nano grub archiso
 
 # Configure pacman/makepkg
 RUN sed -i '/^#.*\(VerbosePkgLists\|ILoveCandy\)/s/^#//' /etc/pacman.conf && \
