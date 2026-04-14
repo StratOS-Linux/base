@@ -4,11 +4,7 @@ FROM archlinux/archlinux:latest
 RUN pacman-key --init && \
     pacman-key --populate archlinux && \
     pacman -Syu --noconfirm && \
-    pacman -S --noconfirm base-devel git sudo archlinux-keyring pyside6 \
-    nano grub archiso pipewire-jack pacman-contrib starship ripgrep \
-    python-gitpython python-rich python-pyxdg python-psutil python-yaml \
-    python-six python-pycryptodome python-cachetools \
-    python-requests python-zstandard qt6-tools gnu-free-fonts
+    pacman -S --noconfirm base-devel git sudo archlinux-keyring nano grub archiso
 
 # Configure pacman/makepkg
 RUN sed -i '/^#.*\(VerbosePkgLists\|ILoveCandy\)/s/^#//' /etc/pacman.conf && \
@@ -44,11 +40,11 @@ RUN gpg --recv E78DAE0F3115E06B && \
     echo -e "trust\n5\ny\nquit" | gpg --batch --command-fd 0 --edit-key E78DAE0F3115E06B
 
 # Create builder user
-#RUN useradd -m -s /bin/bash builder && \
-#    usermod -aG wheel builder && \
-#    echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m -s /bin/bash builder && \
+   usermod -aG wheel builder && \
+   echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# USER builder
+USER builder
 # WORKDIR /workspace
 
 RUN pacman -Sccc --noconfirm
