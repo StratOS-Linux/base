@@ -28,16 +28,12 @@ RUN export TMPFILE="/tmp/ratemir" && \
 
 # Add third-party keys
 RUN pacman-key --keyserver hkps://keyserver.ubuntu.com --recv-keys \
-    9AE4078033F8024D 647F28654894E3BD457199BE38DBBDC86092693E E78DAE0F3115E06B && \
-    pacman-key --lsign-key 9AE4078033F8024D 647F28654894E3BD457199BE38DBBDC86092693E E78DAE0F3115E06B && \
+    9AE4078033F8024D 647F28654894E3BD457199BE38DBBDC86092693E 17E90D521672C04631B1183EE78DAE0F3115E06B && \
+    pacman-key --lsign-key 9AE4078033F8024D 647F28654894E3BD457199BE38DBBDC86092693E 17E90D521672C04631B1183EE78DAE0F3115E06B && \
     curl -sS https://github.com/elkowar.gpg | gpg --dearmor | pacman-key --add - && \
     pacman-key --lsign-key elkowar && \
     curl -sS https://github.com/web-flow.gpg | gpg --dearmor | pacman-key --add - && \
     pacman-key --lsign-key web-flow
-
-# Receive and trust Elii Zaretskii's keys (Stratmacs)
-RUN gpg --recv E78DAE0F3115E06B && \
-    echo -e "trust\n5\ny\nquit" | gpg --batch --command-fd 0 --edit-key E78DAE0F3115E06B
 
 # Create builder user
 RUN useradd -m -s /bin/bash builder && \
@@ -47,4 +43,8 @@ RUN useradd -m -s /bin/bash builder && \
 RUN pacman -Sccc --noconfirm
 
 USER builder
+# Receive and trust Elii Zaretskii's keys (Stratmacs)
+RUN gpg --recv 17E90D521672C04631B1183EE78DAE0F3115E06B && \
+    echo -e "trust\n5\ny\nquit" | gpg --batch --command-fd 0 --edit-key 17E90D521672C04631B1183EE78DAE0F3115E06B
+
 # WORKDIR /workspace
