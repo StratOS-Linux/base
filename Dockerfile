@@ -44,7 +44,7 @@ RUN useradd -m -s /bin/bash builder && \
    usermod -aG wheel builder && \
    echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+RUN pacman -Sccc --noconfirm
+
 USER builder
 # WORKDIR /workspace
-
-RUN pacman -Sccc --noconfirm
