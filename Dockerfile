@@ -44,7 +44,10 @@ RUN pacman -Sccc --noconfirm
 
 USER builder
 # Receive and trust Elii Zaretskii's keys (Stratmacs)
-RUN gpg --recv 17E90D521672C04631B1183EE78DAE0F3115E06B && \
+RUN rm -rf ~/.gnupg && \
+    mkdir -p ~/.gnupg && chmod 700 ~/.gnupg && \
+    gpgconf --kill all || true && \
+    gpg --recv 17E90D521672C04631B1183EE78DAE0F3115E06B && \
     echo -e "trust\n5\ny\nquit" | gpg --batch --command-fd 0 --edit-key 17E90D521672C04631B1183EE78DAE0F3115E06B
 
 # WORKDIR /workspace
